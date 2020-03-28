@@ -1,10 +1,10 @@
 from flask import Flask, render_template
 from bs4 import BeautifulSoup
-import urllib, json
+import urllib, json, os
 
-kcci = Flask(__name__)
+app = Flask(__name__)
 
-@kcci.route('/')
+@app.route('/')
 def get_stories():
     main = urllib.request.urlopen('https://kcci.com')
     soup = BeautifulSoup(main, 'html.parser')
@@ -37,4 +37,5 @@ def get_stories():
         count = count + 1
 
 if __name__ == '__main__':
-    kcci.run()
+    port = os.getenv('PORT', 5050)
+    app.run(host= '0.0.0.0', port=port)
